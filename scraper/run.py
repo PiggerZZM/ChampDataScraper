@@ -18,17 +18,17 @@ def run(years: List[str]):
 
     ajax_url = "http://data.champdas.com/getMatchStaticListAjax.html"
 
+    json_data_list = []
     for match_url in match_urls:
         # 获取比赛球队名称
         l_team, r_team = get_team_names(match_url)
         # 获取比赛id
         match_id = get_match_id(match_url)
-        json_data_list = []
         for half in [0, 1, 2]:
             # 请求"球队数据"
             json_data_list.append(get_json_data(ajax_url, match_id, half, l_team, r_team))
-        # 存储
-        json_to_csv(json_data_list, file_name=r"match_data.csv")
+    # 存储
+    json_to_csv(json_data_list, file_name=r"match_data.csv")
 
 
 if __name__ == '__main__':
