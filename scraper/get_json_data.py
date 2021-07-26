@@ -1,9 +1,11 @@
 import json
 import re
+from logging import Logger
 from typing import Dict
 
 import requests
-import logging
+
+from scraper.get_logger import get_logger
 
 
 def get_match_id(match_url: str) -> int:
@@ -16,9 +18,10 @@ def get_match_id(match_url: str) -> int:
     return int(re.findall(r"\d+", match_url)[0])
 
 
-def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: str) -> Dict:
+def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: str, logger: Logger) -> Dict:
     """
     使用POST请求比赛详情页下的"球队数据"
+    :param logger: 日志
     :param ajax_url: ajax URL
     :param match_id: 比赛id
     :param half: 0-全场 1-上半场 2-下半场
@@ -34,8 +37,8 @@ def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: 
 
     json_dict = {}
     try:
-        logging.info("ajax_url: " + ajax_url)
-        logging.info("get json data: match_id = {}, half = {}".format(match_id, half))
+        logger.info("ajax_url: " + ajax_url)
+        logger.info("get json data: match_id = {}, half = {}".format(match_id, half))
         response = requests.post(ajax_url, post_params)
         response.raise_for_status()
         json_data = response.text
@@ -43,12 +46,8 @@ def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: 
         json_dict['l_team'] = l_team
         json_dict["r_team"] = r_team
     except requests.RequestException as e:
-        logging.warning("get json data failed: ajax_url = {}, match_id = {}, half = {}".format(ajax_url, match_id, half))
-        logging.warning(e)
+        logger.warning("get json data failed: ajax_url = {}, match_id = {}, half = {}".format(ajax_url, match_id, half))
+        logger.warning(e)
 
     return json_dict
 
-
-if __name__ == '__main__':
-    json_data = get_json_data("http://data.champdas.com/getMatchStaticListAjax.html", 16333, 2, "大连一方", "北京人和")
-    print(json_data)

@@ -1,7 +1,7 @@
+from logging import Logger
 from typing import List
 
 import requests
-import logging
 from bs4 import BeautifulSoup
 
 
@@ -29,10 +29,12 @@ def get_match_url(base_url: str, other: str) -> str:
     return base_url + other
 
 
-def get_all_match_urls(years: List[str], matches: List[str]) -> List[str]:
+def get_all_match_urls(year: str, match: str, logger: Logger) -> List[str]:
     """
     获取所有比赛详情页的URL
-    :param years: 赛季
+    :param logger: 日志
+    :param year: 赛季
+    :param match: 中超或中甲
     :return: 所有比赛详情页的URL
     """
 
@@ -40,32 +42,24 @@ def get_all_match_urls(years: List[str], matches: List[str]) -> List[str]:
     rounds = [str(i) for i in range(1, 31)]
     match_urls = []
 
-    for year in years:
-        for round in rounds:
-            for match in matches:
-                # 请求
-                schedule_detail_url = get_schedule_detail_url(base_url, match, year, round)
-                try:
-                    logging.info("get schedule detail url: " + schedule_detail_url)
-                    response = requests.get(schedule_detail_url)
-                    response.raise_for_status()
-                    # 解析
-                    html = response.text
-                    soup = BeautifulSoup(html, "lxml")
-                    match_note_list = soup.find_all(name="span", class_="matchNote")
-                    for match_note in match_note_list:
-                        other = match_note.a["href"]
-                        match_url = get_match_url(base_url, other)
-                        match_urls.append(match_url)
-                except requests.RequestException as e:
-                    logging.warning("get schedule detail url failed: " + schedule_detail_url)
-                    logging.warning(e)
+    for round in rounds:
+        # 请求
+        schedule_detail_url = get_schedule_detail_url(base_url, match, year, round)
+        try:
+            logger.info("get schedule detail url: " + schedule_detail_url)
+            response = requests.get(schedule_detail_url)
+            response.raise_for_status()
+            # 解析
+            html = response.text
+            soup = BeautifulSoup(html, "lxml")
+            match_note_list = soup.find_all(name="span", class_="matchNote")
+            for match_note in match_note_list:
+                other = match_note.a["href"]
+                match_url = get_match_url(base_url, other)
+                match_urls.append(match_url)
+        except requests.RequestException as e:
+            logger.warning("get schedule detail url failed: " + schedule_detail_url)
+            logger.warning(e)
 
     return match_urls
 
-
-if __name__ == '__main__':
-    years = ["2017", "2018", "2019", "2020"]
-    matches = ["1", "2"]
-    match_urls = get_all_match_urls(years, matches)
-    print(len(match_urls))
