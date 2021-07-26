@@ -8,8 +8,10 @@ from scraper.get_json_data import get_match_id, get_json_data
 from scraper.get_team_names import get_team_names
 from scraper.json_to_csv import json_to_csv
 
-logging.basicConfig(level=logging.INFO,
-                    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+logging.basicConfig(level=logging.WARNING,
+                    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
+                    filename=r"logs.log",
+                    filemode='w')
 
 
 def run(years: List[str]):
@@ -28,9 +30,9 @@ def run(years: List[str]):
             # 请求"球队数据"
             json_data_list.append(get_json_data(ajax_url, match_id, half, l_team, r_team))
     # 存储
-    json_to_csv(json_data_list, file_name=r"match_data.csv")
+    json_to_csv(json_data_list, file_name=r"match_data_{}-{}.csv".format(years[0], years[-1]))
 
 
 if __name__ == '__main__':
-    years = ["2018", "2019"]
+    years = ["2017", "2018", "2019", "2020"]
     run(years)
