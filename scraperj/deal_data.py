@@ -51,8 +51,7 @@ def deal_data(response, team_dict):
                 data_dict[replace_dict[data_key]] = dict()
             data_dict[replace_dict[data_key]][team_dict['客场' if guest > home else '主场']] = response[key]
         except:
-            print(key,'替换失败')
-
+            print(key, '替换失败')
     return data_dict
 
 if __name__ == '__main__':
@@ -62,7 +61,7 @@ if __name__ == '__main__':
      'homePass': 453, 'homeInitAttackRate': 0.659, 'homeGoals': 1, 'homePenalties': 1, 'homeShots': 20,
      'homeCorners': 7, 'guestPenalties': 1, 'homePossAve': 0.599, 'matchHalf': 0, 'matchId': '2761',
      'guestPossAve': 0.401, 'homeShotsOnTarget': 3}
-    team_dict = {'home': 'a', 'guest': 'b'}
+    team_dict = {'主场': 'a', '客场': 'b'}
     a = deal_data(response, team_dict)
     print(a)
 

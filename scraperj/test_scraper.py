@@ -41,10 +41,10 @@ def get_match_data(match_id_list, match_type='zc'):
         try:
             if match_data.get(match_id) is None:
                 match_data[match_id] = dict()
-            if match_data[match_id].get('team') is None:
-                match_data[match_id]['team'] = dict()
+            if match_data[match_id].get('队伍') is None:
+                match_data[match_id]['队伍'] = dict()
                 team_dict = get_team(match_id)
-                match_data[match_id]['team'] = team_dict
+                match_data[match_id]['队伍'] = team_dict
             for url in url_list:
                 print('正在爬取 {}'.format(cate_dict[url]))
                 if match_data[match_id].get(cate_dict[url]) is None:
@@ -79,6 +79,8 @@ def get_match_data(match_id_list, match_type='zc'):
 
 if __name__ == '__main__':
     for t in ['zc', 'zj']:
+        if t == 'zc':
+            continue
         url_list = get_url(t)
         id_list = get_match_id(url_list[:1], t)
         data = get_match_data(id_list, t)
