@@ -19,7 +19,7 @@ def get_match_id(match_url: str) -> int:
 def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: str) -> Dict:
     """
     使用POST请求比赛详情页下的"球队数据"
-    :param ajax_url: "http://data.champdas.com/getMatchStaticListAjax.html"
+    :param ajax_url: ajax URL
     :param match_id: 比赛id
     :param half: 0-全场 1-上半场 2-下半场
     :param l_team: 主场球队名称
@@ -34,6 +34,7 @@ def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: 
 
     json_dict = {}
     try:
+        logging.info("ajax_url: " + ajax_url)
         logging.info("get json data: match_id = {}, half = {}".format(match_id, half))
         response = requests.post(ajax_url, post_params)
         response.raise_for_status()
@@ -42,7 +43,7 @@ def get_json_data(ajax_url: str, match_id: int, half: int, l_team: str, r_team: 
         json_dict['l_team'] = l_team
         json_dict["r_team"] = r_team
     except requests.RequestException as e:
-        logging.warning("get json data failed: match_id = {}, half = {}".format(match_id, half))
+        logging.warning("get json data failed: ajax_url = {}, match_id = {}, half = {}".format(ajax_url, match_id, half))
         logging.warning(e)
 
     return json_dict

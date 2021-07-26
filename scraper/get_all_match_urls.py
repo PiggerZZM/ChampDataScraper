@@ -29,7 +29,7 @@ def get_match_url(base_url: str, other: str) -> str:
     return base_url + other
 
 
-def get_all_match_urls(years: List[str]) -> List[str]:
+def get_all_match_urls(years: List[str], matches: List[str]) -> List[str]:
     """
     获取所有比赛详情页的URL
     :param years: 赛季
@@ -38,7 +38,6 @@ def get_all_match_urls(years: List[str]) -> List[str]:
 
     base_url = "http://data.champdas.com"
     rounds = [str(i) for i in range(1, 31)]
-    matches = ["1", "2"]
     match_urls = []
 
     for year in years:
@@ -66,6 +65,7 @@ def get_all_match_urls(years: List[str]) -> List[str]:
 
 
 if __name__ == '__main__':
-    years = ["2018", "2019"]
-    match_urls = get_all_match_urls(years)
-    print(match_urls)
+    years = ["2017", "2018", "2019", "2020"]
+    matches = ["1", "2"]
+    match_urls = get_all_match_urls(years, matches)
+    print(len(match_urls))
