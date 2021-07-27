@@ -38,6 +38,7 @@ def run(year: str, match: str, logger: Logger):
 
 
 if __name__ == '__main__':
+    # 爬取2017-2020中超中甲所有比赛的球队数据
     years = ["2017", "2018", "2019", "2020"]
     matches = ["1", "2"]
     for year in years:
