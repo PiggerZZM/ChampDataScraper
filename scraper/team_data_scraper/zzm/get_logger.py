@@ -6,7 +6,7 @@ def get_logger(year: str, match: str):
     logger = logging.getLogger(year + '_' + match)
     logger.setLevel(logging.WARNING)  # Log等级总开关
     # 第二步，创建一个handler，用于写入日志文件
-    log_path = '../logs/'
+    log_path = '../../../logs/'
     log_name = log_path + "{}_{}".format(year, match) + ".log"
     logfile = log_name
     fh = logging.FileHandler(logfile, mode='w')

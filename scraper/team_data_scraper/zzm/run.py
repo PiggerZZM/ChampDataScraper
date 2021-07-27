@@ -1,12 +1,12 @@
 from logging import Logger
 
-from scraper.get_all_match_urls import get_all_match_urls
-from scraper.get_json_data import get_match_id, get_json_data
+from scraper.team_data_scraper.zzm.get_all_match_urls import get_all_match_urls
+from scraper.team_data_scraper.zzm.get_json_data import get_match_id, get_json_data
 
 # 日志设置
-from scraper.get_logger import get_logger
-from scraper.get_team_names import get_team_names
-from scraper.json_to_csv import json_to_csv
+from scraper.team_data_scraper.zzm.get_logger import get_logger
+from scraper.team_data_scraper.zzm.get_team_names import get_team_names
+from scraper.team_data_scraper.zzm.json_to_csv import json_to_csv
 
 
 def run(year: str, match: str, logger: Logger):
