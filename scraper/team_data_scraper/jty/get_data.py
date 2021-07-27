@@ -1,14 +1,13 @@
 import requests
 from time import sleep
-import pandas as pd
 import sys
-sys.path.append("..")
-from get_url import get_url
-from get_match_id import get_match_id
+sys.path.append("../../..")
 from bs4 import BeautifulSoup
-from deal_data import deal_data
+from scraper.team_data_scraper.jty.deal_data import deal_data
 
 base_url = 'http://data.champdas.com/match/data-{}.html'
+
+
 
 def get_team(match_id):
     response = requests.get(base_url.format(match_id))
@@ -74,33 +73,3 @@ def get_match_data(match_id_list, match_type='zc'):
             file.write(match_id + '\n')
             file.close()
     return match_data
-
-
-
-if __name__ == '__main__':
-    for t in ['zc', 'zj']:
-        if t == 'zc':
-            continue
-        url_list = get_url(t)
-        id_list = get_match_id(url_list[:1], t)
-        data = get_match_data(id_list, t)
-        file = open('gotten_data/data_' + t + '.txt', 'w')
-        file.write(str(data))
-        file.close()
-        pd.DataFrame(data).to_csv('gotten_data/data_' + t + '.csv', encoding='utf-8-sig')
-        print(t+'已经存入gotten_data')
-        break
-
-
-
-
-
-
-
-
-
-
-
-
-
-
