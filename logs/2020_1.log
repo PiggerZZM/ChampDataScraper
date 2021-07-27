@@ -1,0 +1,2 @@
+2021-07-27 11:41:53,193 - get_json_data.py[line:49] - WARNING: get json data failed: ajax_url = http://data.champdas.com/getMatchAttackAjax.html, match_id = 17411, half = 0
+2021-07-27 11:41:53,193 - get_json_data.py[line:50] - WARNING: HTTPConnectionPool(host='data.champdas.com', port=80): Max retries exceeded with url: /getMatchAttackAjax.html (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021F723B1908>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))

@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+
 def catch_detail_data(button, con_one, writer):
     button.click()
     time.sleep(1)
@@ -14,6 +15,7 @@ def catch_detail_data(button, con_one, writer):
     action = con_one.find_elements_by_class_name('bg_black')
     for i in range(len(data) // 2):
         writer.writerow([action[i].text, data[i * 2].text, data[i * 2 + 1].text])
+
 
 def catch_rough_data(tab, browser, name, writer, l_team, r_team):
     tab.click()
@@ -29,6 +31,7 @@ def catch_rough_data(tab, browser, name, writer, l_team, r_team):
     writer.writerow([button[2].text, l_team, r_team])
     catch_detail_data(button[2], con_one, writer)
 
+
 if __name__ == '__main__':
     browser = webdriver.Edge()
 
@@ -36,19 +39,19 @@ if __name__ == '__main__':
         csvfile = open('data.csv', 'a', encoding='utf-8')
         writer = csv.writer(csvfile)
         browser.get('http://data.champdas.com/match/data-18010.html')
-        #获取两个队名
+        # 获取两个队名
         l_team = browser.find_element_by_class_name('l_team').find_element_by_tag_name('p').text
         r_team = browser.find_element_by_class_name('r_team').find_element_by_tag_name('p').text
-        #获取上列表：首发阵容，球队数据，球员数据。。。。
+        # 获取上列表：首发阵容，球队数据，球员数据。。。。
         title = browser.find_elements_by_name('titletab')
-        #取球队数据
+        # 取球队数据
         bon = title[1]
         bon.click()
         tab2 = []
-        temp = browser.find_element_by_id('tab2')#球队数据
-        tab2.append(temp.find_element_by_id('one1'))#总览
-        tab2.append(temp.find_element_by_id('one2'))#进攻
-        tab2.append(temp.find_element_by_id('one3'))#防守
+        temp = browser.find_element_by_id('tab2')  # 球队数据
+        tab2.append(temp.find_element_by_id('one1'))  # 总览
+        tab2.append(temp.find_element_by_id('one2'))  # 进攻
+        tab2.append(temp.find_element_by_id('one3'))  # 防守
 
         writer.writerow(['总览'])
         catch_rough_data(tab2[0], browser, 'con_one_1', writer, l_team, r_team)
