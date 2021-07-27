@@ -11,7 +11,7 @@ def json_to_csv(json_data_list: List[Dict], file_name: str):
     :return:
     """
 
-    file_path = "../data/" + file_name
+    file_path = "../../../data/" + file_name
     with open(file_path, "w", newline='') as csv_file:
         fieldnames = json_data_list[0].keys()
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
