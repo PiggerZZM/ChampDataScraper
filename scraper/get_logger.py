@@ -3,7 +3,7 @@ import logging
 
 def get_logger(year: str, match: str):
     # 第一步，创建一个logger
-    logger = logging.getLogger()
+    logger = logging.getLogger(year + '_' + match)
     logger.setLevel(logging.WARNING)  # Log等级总开关
     # 第二步，创建一个handler，用于写入日志文件
     log_path = '../logs/'
