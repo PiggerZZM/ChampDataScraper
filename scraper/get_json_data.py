@@ -5,8 +5,6 @@ from typing import Dict
 
 import requests
 
-from scraper.get_logger import get_logger
-
 
 def get_match_id(match_url: str) -> int:
     """
