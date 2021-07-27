@@ -19,8 +19,8 @@ def get_team_names(match_url: str, logger: Logger) -> Tuple[Union[str, Any], Uni
         response.raise_for_status()
         html = response.text
         soup = BeautifulSoup(html, 'lxml')
-        l_team = soup.find_all(class_="l_team")[0].p.text
-        r_team = soup.find_all(class_="r_team")[0].p.text
+        l_team = soup.find(class_="l_team").p.text
+        r_team = soup.find(class_="r_team").p.text
 
     except requests.RequestException as e:
         logger.warning("get team names failed: " + match_url)
